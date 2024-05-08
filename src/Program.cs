@@ -1,4 +1,5 @@
 using ToDoAPI.Models;
+using ToDoAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<ToDoDatabaseSettings>(
     builder.Configuration.GetSection("ToDoDatabase"));
+
+builder.Services.AddSingleton<ToDoService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
