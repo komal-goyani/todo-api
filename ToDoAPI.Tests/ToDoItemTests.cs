@@ -26,7 +26,7 @@ namespace ToDoAPI.Tests
         }
 
         [Fact]
-        public void Name_SetWithValueLessthan100Chars_ValidationShouldFail()
+        public void Name_SetWithValueLessthan100Chars_ValidationShouldPass()
         {
             //Arrange
             var todoItem = new ToDoItem();
