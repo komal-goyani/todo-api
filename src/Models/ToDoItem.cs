@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ToDoAPI.Models
 {
+    [BsonIgnoreExtraElements]
     public class ToDoItem
     {
         [BsonId]

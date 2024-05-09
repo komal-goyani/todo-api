@@ -27,16 +27,11 @@ namespace ToDoAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ToDoItem>> Get(string id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var toDo = await _toDoService.GetAsync(id);
 
             if (toDo is null)
             {
-                return NotFound();
+                return NotFound($"Todo with Id = {id} not found");
             }
 
             return Ok(toDo);
@@ -44,7 +39,7 @@ namespace ToDoAPI.Controllers
 
         // Post: api/ToDo
         [HttpPost]
-        public async Task<IActionResult> Post(ToDoItem newTodo)
+        public async Task<IActionResult> Post([FromBody] ToDoItem newTodo)
         {
             if (!ModelState.IsValid)
             {
@@ -59,7 +54,7 @@ namespace ToDoAPI.Controllers
 
         // Put: api/ToDo/id
         [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> Update(string id, ToDoItem updatedToDo)
+        public async Task<IActionResult> Update(string id, [FromBody] ToDoItem updatedToDo)
         {
             if (!ModelState.IsValid)
             {
@@ -70,7 +65,7 @@ namespace ToDoAPI.Controllers
 
             if (toDo is null)
             {
-                return NotFound();
+                return NotFound($"Todo with Id = {id} not found");
             }
 
             updatedToDo.Id = toDo.Id;
@@ -82,13 +77,13 @@ namespace ToDoAPI.Controllers
 
         // DELETE: api/ToDo/id
         [HttpDelete("{id:length(24)}")]
-        public async Task<IActionResult> Delete([FromRoute] string id)
+        public async Task<IActionResult> Delete(string id)
         {
             var toDo = await _toDoService.GetAsync(id);
 
             if (toDo is null)
             {
-                return NotFound();
+                return NotFound($"Todo with Id = {id} not found");
             }
 
             await _toDoService.RemoveAsync(id);
