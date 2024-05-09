@@ -4,7 +4,7 @@ using ToDoAPI.Models;
 
 namespace ToDoAPI.Services
 {
-    public class ToDoService
+    public class ToDoService : IToDoService
     {
         private readonly IMongoCollection<ToDoItem> todoItems;
 

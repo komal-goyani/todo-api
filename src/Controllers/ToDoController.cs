@@ -10,17 +10,17 @@ namespace ToDoAPI.Controllers
     [ApiController]
     public class ToDoController : ControllerBase
     {
-        private readonly ToDoService toDoService;
+        private readonly IToDoService _toDoService;
 
-        public ToDoController(ToDoService toDoService)
+        public ToDoController(IToDoService toDoService)
         {
-            this.toDoService = toDoService;
+            this._toDoService = toDoService;
         }
         // Get: api/ToDo
         [HttpGet]
         public async Task<List<ToDoItem>> Get()
         {
-            return await toDoService.GetAsync();
+            return await _toDoService.GetAsync();
         }
 
         // Get: api/ToDo/id
@@ -32,7 +32,7 @@ namespace ToDoAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var toDo = await toDoService.GetAsync(id);
+            var toDo = await _toDoService.GetAsync(id);
 
             if (toDo is null)
             {
@@ -51,7 +51,7 @@ namespace ToDoAPI.Controllers
                 return BadRequest();
             }
 
-            await toDoService.CreateAsync(newTodo);
+            await _toDoService.CreateAsync(newTodo);
 
             return CreatedAtAction(nameof(Get), new { id = newTodo.Id }, newTodo);
         }
@@ -66,21 +66,16 @@ namespace ToDoAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != updatedToDo.Id)
-            {
-                return BadRequest();
-            }
-
-            var toDo = await toDoService.GetAsync(id);
+            var toDo = await _toDoService.GetAsync(id);
 
             if (toDo is null)
             {
                 return NotFound();
             }
 
-            //updatedToDo.Id = toDo.Id; //doesn't make sense
+            updatedToDo.Id = toDo.Id;
 
-            await toDoService.UpdateAsync(id, updatedToDo);
+            await _toDoService.UpdateAsync(id, updatedToDo);
 
             return NoContent();
         }
@@ -89,14 +84,14 @@ namespace ToDoAPI.Controllers
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> Delete([FromRoute] string id)
         {
-            var toDo = await toDoService.GetAsync(id);
+            var toDo = await _toDoService.GetAsync(id);
 
             if (toDo is null)
             {
                 return NotFound();
             }
 
-            await toDoService.RemoveAsync(id);
+            await _toDoService.RemoveAsync(id);
 
             return NoContent();
         }
