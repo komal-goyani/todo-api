@@ -46,7 +46,7 @@ namespace ToDoAPI.Services
             await todoItems.ReplaceOneAsync(x => x.Id == id, updatedToDo);
         }
 
-        public async Task RemoveAsync(string id)
+        public async Task DeleteAsync(string id)
         {
             await todoItems.DeleteOneAsync(x => x.Id == id);
         }

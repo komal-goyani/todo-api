@@ -25,7 +25,7 @@ namespace ToDoAPI.Controllers
 
         // Get: api/ToDo/id
         [HttpGet("{id}")]
-        public async Task<ActionResult<ToDoItem>> Get(string id)
+        public async Task<ActionResult<ToDoItem>> GetById(string id)
         {
             var toDo = await _toDoService.GetAsync(id);
 
@@ -50,7 +50,6 @@ namespace ToDoAPI.Controllers
 
             return CreatedAtAction(nameof(Get), new { id = newTodo.Id }, newTodo);
         }
-
 
         // Put: api/ToDo/id
         [HttpPut("{id:length(24)}")]
@@ -86,7 +85,7 @@ namespace ToDoAPI.Controllers
                 return NotFound($"Todo with Id = {id} not found");
             }
 
-            await _toDoService.RemoveAsync(id);
+            await _toDoService.DeleteAsync(id);
 
             return NoContent();
         }

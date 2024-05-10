@@ -11,8 +11,9 @@ namespace ToDoAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
+        [Required]
         [MaxLength(100)]
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; }
 
         public bool IsCompleted { get; set; }
     }
