@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver.Core.Operations;
+﻿using Microsoft.AspNetCore.Mvc;
 using ToDoAPI.Models;
 using ToDoAPI.Services;
 
