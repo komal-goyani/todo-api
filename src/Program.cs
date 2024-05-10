@@ -10,7 +10,6 @@ builder.Services.Configure<ToDoDatabaseSettings>(
 
 builder.Services.AddSingleton<IToDoService, ToDoService>();
 
-
 builder.Services.AddControllers().AddJsonOptions(
         options => options.JsonSerializerOptions.PropertyNamingPolicy = null); 
 
@@ -25,6 +24,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseExceptionHandler("/error-development");
+}
+else
+{
+    app.UseExceptionHandler("/error");
 }
 
 app.UseHttpsRedirection();

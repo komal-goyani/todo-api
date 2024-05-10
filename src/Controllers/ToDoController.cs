@@ -41,11 +41,6 @@ namespace ToDoAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ToDoItem newTodo)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             await _toDoService.CreateAsync(newTodo);
 
             return CreatedAtAction(nameof(Get), new { id = newTodo.Id }, newTodo);
@@ -55,11 +50,6 @@ namespace ToDoAPI.Controllers
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> Update(string id, [FromBody] ToDoItem updatedToDo)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var toDo = await _toDoService.GetAsync(id);
 
             if (toDo is null)
